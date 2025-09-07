@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LACOSTE | Shoes Collection</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { font-family: 'Segoe UI', sans-serif; background-color: #f9f9f9; scroll-behavior: smooth; }
+    a { text-decoration: none; color: inherit; }
+
+    /* Navbar */
+    .navbar 
+    { 
+    position: fixed; 
+    top: 0; 
+    width: 100%; 
+    background-color: white; 
+    padding: 20px 60px;
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    z-index: 1000; 
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1); 
+    }
+    
+    .logo 
+    { 
+    font-size: 24px; 
+    font-weight: bold; 
+    color: #004d40;
+    }
+    .nav-links 
+    { 
+    display: flex; 
+    gap: 30px;
+     align-items: center; 
+    }
+    .nav-btn { font-weight: 500; padding: 6px 10px; border-radius: 4px; transition: background 0.3s; }
+    .nav-btn:hover { background-color: #e0f2f1; }
+    .icon-btn { font-size: 18px; padding: 6px 10px; color: #004d40; transition: color 0.3s, background 0.3s; border-radius: 4px; display:flex; align-items:center; gap:6px; }
+    .icon-btn:hover { background-color: #e0f2f1; color: #00251a; }
+    .dropdown { position: relative; }
+    .dropdown-btn { cursor: pointer; font-weight: 500; }
+    .dropdown-content { position: absolute; top: 45px; left: 0; background-color: white; min-width: 150px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1); display: none; flex-direction: column; z-index: 1001; }
+    .dropdown-content a { padding: 12px 16px; transition: background 0.3s; }
+    .dropdown-content a:hover { background-color: #f1f1f1; }
+    .dropdown-content.show { display: flex; }
+    .contact-link { font-weight: 500; padding: 6px 10px; border-radius: 4px; transition: background 0.3s; }
+    .contact-link:hover { background-color: #e0f2f1; }
+
+    /* Shoes Section */
+    .button-shirts-section { padding: 140px 60px 80px; text-align: center; }
+    .section-title { font-size: 36px; color: #004d40; margin-bottom: 40px; }
+    .shirts-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 40px; }
+    .shirt-card { background-color: white; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      max-width: 280px; padding: 20px; transition: transform 0.3s; text-align: left; }
+    .shirt-card:hover { transform: translateY(-10px); }
+    .shirt-card img { width: 100%; border-radius: 8px; margin-bottom: 15px; cursor: pointer; transition: transform 0.2s; }
+    .shirt-card img:hover { transform: scale(1.03); }
+    .shirt-card h3 { font-size: 20px; color: #004d40; margin-bottom: 10px; }
+    .shirt-details { font-size: 14px; color: #555; line-height: 1.6; }
+    .shirt-details strong { color: #004d40; }
+
+    /* Modal */
+    .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 20px; }
+    .modal.show { display: flex; }
+    .modal-content {
+      background: #fff; border-radius: 12px; max-width: 900px; width: 100%;
+      padding: 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: center; position: relative;
+    }
+    .modal-left img { width: 100%; border-radius: 8px; object-fit: cover; max-height: 520px; }
+    .modal-right h3 { margin-bottom: 8px; font-size: 22px; color: #004d40; }
+    .modal-right p { margin-bottom: 12px; color: #333; font-weight: 600; }
+    .modal-right label { display: block; margin-top: 8px; font-size: 13px; color: #555; margin-bottom: 6px; }
+    .modal-right select { width: 100%; padding: 8px 10px; border-radius: 6px; border: 1px solid #ddd; margin-bottom: 10px; }
+    .modal-right .add-btn { display: inline-block; margin-top: 10px; background: #004d40; color: #fff; padding: 10px 14px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; }
+    .modal-right .add-btn:active { transform: translateY(1px); }
+    .modal-close { position: absolute; top: 10px; right: 12px; font-size: 22px; cursor: pointer; color:#666; }
+    @media (max-width: 720px) {
+      .modal-content { grid-template-columns: 1fr; max-height: 90vh; overflow: auto; }
+      .modal-left img { max-height: 360px; }
+    }
+
+    /* Toast */
+    .toast { position: fixed; top: 20px; right: 20px; background: #004d40; color: #fff; padding: 10px 14px; border-radius: 8px; display: none; z-index: 2100; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+    .toast.show { display: block; animation: fade 0.4s ease; }
+    @keyframes fade { from {opacity:0; transform: translateY(-6px)} to {opacity:1; transform:none} }
+
+    /* Footer */
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #004d40;
+  color: white;
+  text-align: center;
+  padding: 15px 0;
+  font-size: 14px;
+  z-index: 1000;
+}
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="logo">LACOSTE</div>
+    <div class="nav-links">
+      <a href="index.html" class="nav-btn">Home</a>
+      <div class="dropdown">
+        <div class="dropdown-btn">Men</div>
+        <div class="dropdown-content">
+          <a href="mshirts.html">Shirts</a>
+          <a href="shoes.html">Shoes</a>
+          <a href="maccessories.html">Accessories</a>
+        </div>
+      </div>
+      <div class="dropdown">
+        <div class="dropdown-btn">Women</div>
+        <div class="dropdown-content">
+          <a href="wtops.html">Tops</a>
+          <a href="wshoes.html">Sneakers</a>
+          <a href="#">Bags</a>
+        </div>
+      </div>
+      <div class="dropdown">
+        <div class="dropdown-btn">Collections</div>
+        <div class="dropdown-content">
+          <a href="new.html">New Arrivals</a>
+          <a href="best.html">Best Sellers</a>
+          <a href="lim.html">Limited Edition</a>
+        </div>
+      </div>
+      
+      <a href="about.html" class="nav-btn">About</a>
+      <a href="#" class="icon-btn"><i class="fas fa-shopping-cart"></i> <span id="cart-count">0</span></a>
+      <a href="login.html" class="icon-btn"><i class="fas fa-user"></i></a>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div id="product-modal" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-name">
+      <div class="modal-left">
+        <img id="modal-img" src="" alt="">
+      </div>
+      <div class="modal-right">
+        <div class="modal-close" id="modal-close" title="Close">&times;</div>
+        <h3 id="modal-name">Product Name</h3>
+        <p id="modal-price">₱0</p>
+        <label for="modal-size">Size</label>
+        <select id="modal-size"></select>
+        <label for="modal-color">Color</label>
+        <select id="modal-color"></select>
+        <button id="add-to-cart-btn" class="add-btn">Add to Cart</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast">Added to cart</div>
+
+  <!-- Shoes Section -->
+  <section class="button-shirts-section">
+    <h2 class="section-title">Shoes Collection</h2>
+    <div class="shirts-container">
+
+      <!-- Shoe Cards -->
+      <div class="shirt-card">
+        <img src="shoes1.png" alt="Men's Court Pro Sneakers"
+             data-name="Men's Court Pro Sneakers" data-price="6950"
+             data-sizes="40,41,42,43,44" data-colors="White,Black,Navy">
+        <h3>Men's Court Pro Sneakers</h3>
+        <div class="shirt-details"><strong>Price:</strong> ₱6,950<br><strong>Sizes:</strong> 40–44<br><strong>Colors:</strong> White, Black, Navy</div>
+      </div>
+
+      <div class="shirt-card">
+        <img src="shoes2.png" alt="Men's Baseshot Pro Leather Sneakers"
+             data-name="Men's Baseshot Pro Leather Sneakers" data-price="7250"
+             data-sizes="40,41,42,43" data-colors="White,Brown">
+        <h3>Men's Baseshot Pro Leather Sneakers</h3>
+        <div class="shirt-details"><strong>Price:</strong> ₱7,250<br><strong>Sizes:</strong> 40–43<br><strong>Colors:</strong> White, Brown</div>
+      </div>
+
+      <div class="shirt-card">
+        <img src="shoes3.png" alt="Men's Elite Active Evo Sneakers"
+             data-name="Men's Elite Active Evo Sneakers" data-price="7450"
+             data-sizes="40,41,42,43,44" data-colors="Black,Grey,Blue">
+        <h3>Men's Elite Active Evo Sneakers</h3>
+        <div class="shirt-details"><strong>Price:</strong> ₱7,450<br><strong>Sizes:</strong> 40–44<br><strong>Colors:</strong> Black, Grey, Blue</div>
+      </div>
+
+      <div class="shirt-card">
+        <img src="shoes4.png" alt="Men's Elite Active Evo Sneakers"
+             data-name="Men's Elite Active Evo Sneakers" data-price="6950"
+             data-sizes="40,41,42,43,44" data-colors="White,Black">
+        <h3>Men's Elite Active Evo Sneakers</h3>
+        <div class="shirt-details"><strong>Price:</strong> ₱6,950<br><strong>Sizes:</strong> 40–44<br><strong>Colors:</strong> White, Black</div>
+      </div>
+
+      <div class="shirt-card">
+        <img src="shoes5.png" alt="Men’s Spinor Sneakers"
+             data-name="Men’s Spinor Sneakers" data-price="6650"
+             data-sizes="39,40,41,42" data-colors="Blue,White">
+        <h3>Men’s Spinor Sneakers</h3>
+        <div class="shirt-details"><strong>Price:</strong> ₱6,650<br><strong>Sizes:</strong> 39–42<br><strong>Colors:</strong> Blue, White</div>
+      </div>
+
+      <div class="shirt-card">
+        <img src="shoes6.png" alt="Men's Elite Active Sneakers"
+             data-name="Men's Elite Active Sneakers" data-price="7350"
+             data-sizes="40,41,42,43" data-colors="Grey,Black">
+        <h3>Men's Elite Active Sneakers</h3>
+        <div class="shirt-details"><strong>Price:</strong> ₱7,350<br><strong>Sizes:</strong> 40–43<br><strong>Colors:</strong> Grey, Black</div>
+      </div>
+
+      <div class="shirt-card">
+        <img src="shoes7.png" alt="Men's Backslam Sneakers"
+             data-name="Men's Backslam Sneakers" data-price="6550"
+             data-sizes="39,40,41,42,43" data-colors="White,Black">
+        <h3>Men's Backslam Sneakers</h3>
+        <div class="shirt-details"><strong>Price:</strong> ₱6,550<br><strong>Sizes:</strong> 39–43<br><strong>Colors:</strong> White, Black</div>
+      </div>
+
+      <div class="shirt-card">
+        <img src="shoes8.png" alt="Men's Backslam Sneakers"
+             data-name="Men's Backslam Sneakers" data-price="6550"
+             data-sizes="39,40,41,42,43" data-colors="White,Green">
+        <h3>Men's Backslam Sneakers</h3>
+        <div class="shirt-details"><strong>Price:</strong> ₱6,550<br><strong>Sizes:</strong> 39–43<br><strong>Colors:</strong> White, Green</div>
+      </div>
+
+      <div class="shirt-card">
+        <img src="shoes9.png" alt="Men's L003 Neo Shot Sneakers"
+             data-name="Men's L003 Neo Shot Sneakers" data-price="7850"
+             data-sizes="40,41,42,43,44" data-colors="White,Blue,Orange">
+        <h3>Men's L003 Neo Shot Sneakers</h3>
+        <div class="shirt-details"><strong>Price:</strong> ₱7,850<br><strong>Sizes:</strong> 40–44<br><strong>Colors:</strong> White, Blue, Orange</div>
+      </div>
+
+      <div class="shirt-card">
+        <img src="shoes10.png" alt="Men's Storm 96 2K Sneakers"
+             data-name="Men's Storm 96 2K Sneakers" data-price="8050"
+             data-sizes="40,41,42,43" data-colors="Black,White">
+        <h3>Men's Storm 96 2K Sneakers</h3>
+        <div class="shirt-details"><strong>Price:</strong> ₱8,050<br><strong>Sizes:</strong> 40–43<br><strong>Colors:</strong> Black, White</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <div class="footer">
+    &copy; 2025 LACOSTE | Paul Falame | This project is for School Purposes Only.
+  </div>
+
+  <!-- JS -->
+  <script>
+    let cart = [];
+    const cartCount = document.getElementById('cart-count');
+    const modal = document.getElementById('product-modal');
+    const modalImg = document.getElementById('modal-img');
+    const modalName = document.getElementById('modal-name');
+    const modalPrice = document.getElementById('modal-price');
+    const modalSize = document.getElementById('modal-size');
+    const modalColor = document.getElementById('modal-color');
+    const addToCartBtn = document.getElementById('add-to-cart-btn');
+    const modalClose = document.getElementById('modal-close');
+    const toast = document.getElementById('toast');
+
+    let activeProduct = null;
+
+    function openProductModal(data) {
+      activeProduct = data;
+      modalImg.src = data.img;
+      modalName.textContent = data.name;
+      modalPrice.textContent = `₱${Number(data.price).toLocaleString()}`;
+
+      modalSize.innerHTML = '';
+      if (data.sizes.length) {
+        data.sizes.forEach(s => {
+          const option = document.createElement('option');
+          option.value = s;
+          option.textContent = s;
+          modalSize.appendChild(option);
+        });
+      }
+
+      modalColor.innerHTML = '';
+      if (data.colors.length) {
+        data.colors.forEach(c => {
+          const option = document.createElement('option');
+          option.value = c;
+          option.textContent = c;
+          modalColor.appendChild(option);
+        });
+      }
+
+      modal.classList.add('show');
+    }
+
+    function closeModal() {
+      modal.classList.remove('show');
+      activeProduct = null;
+    }
+
+    document.querySelectorAll('.shirt-card img').forEach(img => {
+      img.addEventListener('click', () => {
+        const data = {
+          img: img.src,
+          name: img.dataset.name,
+          price: img.dataset.price,
+          sizes: img.dataset.sizes ? img.dataset.sizes.split(',') : [],
+          colors: img.dataset.colors ? img.dataset.colors.split(',') : []
+        };
+        openProductModal(data);
+      });
+    });
+
+    // Add to cart action from the modal
+    addToCartBtn.addEventListener('click', () => {
+      if (!activeProduct) return;
+      const chosenSize = modalSize.value || null;
+      const chosenColor = modalColor.value || null;
+
+      const item = {
+        name: activeProduct.name,
+        price: Number(activeProduct.price),
+        size: chosenSize,
+        color: chosenColor,
+        img: activeProduct.img,
+        qty: 1
+      };
+
+      cart.push(item);
+      cartCount.textContent = cart.length;
+
+      // show toast
+      toast.textContent = `${activeProduct.name} added to cart`;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1500);
+
+      closeModal();
+    });
+
+    // Close modal controls
+    modalClose.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    // Dropdown handling (navbar)
+    document.querySelectorAll('.dropdown-btn').forEach(btn => {
+      btn.addEventListener('click', function () {
+        const dropdown = this.nextElementSibling;
+        document.querySelectorAll('.dropdown-content').forEach(menu => {
+          if (menu !== dropdown) menu.classList.remove('show');
+        });
+        dropdown.classList.toggle('show');
+      });
+    });
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.dropdown')) {
+        document.querySelectorAll('.dropdown-content').forEach(menu => menu.classList.remove('show'));
+      }
+    });
+
+    // Optional: expose cart to console for quick testing
+    window.__cart = cart;
+  </script>
+
+</body>
+</html>

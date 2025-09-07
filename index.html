@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LACOSTE | Inspired Homepage</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="logo">LACOSTE</div>
+    <div class="nav-links">
+      <a href="#" class="nav-btn">Home</a>
+
+      <div class="dropdown">
+        <div class="dropdown-btn">Men</div>
+        <div class="dropdown-content">
+          <a href="mshirts.html">Shirts</a>
+          <a href="mshoes.html">Shoes</a>
+          <a href="maccessories.html">Accessories</a>
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <div class="dropdown-btn">Women</div>
+        <div class="dropdown-content">
+          <a href="wtops.html">Tops</a>
+          <a href="wshoes.html">Sneakers</a>
+          <a href="wbags.html">Bags</a>
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <div class="dropdown-btn">Collections</div>
+        <div class="dropdown-content">
+          <a href="new.html">New Arrivals</a>
+          <a href="best.html">Best Sellers</a>
+          <a href="lim.html">Limited Edition</a>
+        </div>
+      </div>
+
+       <a href="about.html" class="nav-btn">About</a>
+      
+       <!-- Cart and Login -->
+      <a href="#" class="icon-btn"><i class="fas fa-shopping-cart"></i></a>
+      <a href="login.html" class="icon-btn"><i class="fas fa-user"></i></a>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <div class="hero">
+    <div class="overlay"></div>
+    <h1 class="fade-in">Modern Elegance</h1>
+    <p class="fade-in delay-1">Step into the world of classic French fashion and sporty refinement with Lacoste's timeless pieces.</p>
+
+    
+    <a href="#" class="cta-button fade-in delay-2">Shop Now</a>
+
+    <!-- Social Media Icons -->
+    <div class="social-icons fade-in delay-3">
+      <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    &copy; 2025 LACOSTE | Paul Falame | This project is for School Purposes Only.
+  </div>
+
+
+  <script>
+    document.querySelectorAll('.dropdown-btn').forEach(btn => {
+      btn.addEventListener('click', function () {
+        const dropdown = this.nextElementSibling;
+
+        document.querySelectorAll('.dropdown-content').forEach(menu => {
+          if (menu !== dropdown) {
+            menu.classList.remove('show');
+          }
+        });
+
+        dropdown.classList.toggle('show');
+      });
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('.dropdown')) {
+        document.querySelectorAll('.dropdown-content').forEach(menu => {
+          menu.classList.remove('show');
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>

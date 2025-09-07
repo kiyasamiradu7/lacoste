@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About | LACOSTE</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    html, body {
+      background-color: #f9f9f9;
+      color: #333;
+      scroll-behavior: smooth;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Navbar */
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background-color: white;
+      padding: 20px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #004d40;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .nav-btn {
+      font-weight: 500;
+      padding: 6px 10px;
+      border-radius: 4px;
+      transition: background 0.3s;
+    }
+
+    .nav-btn:hover {
+      background-color: #e0f2f1;
+    }
+
+    .icon-btn {
+      font-size: 18px;
+      padding: 6px 10px;
+      color: #004d40;
+      transition: color 0.3s, background 0.3s;
+      border-radius: 4px;
+    }
+
+    .icon-btn:hover {
+      background-color: #e0f2f1;
+      color: #00251a;
+    }
+
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-btn {
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .dropdown-content {
+      position: absolute;
+      top: 45px;
+      left: 0;
+      background-color: white;
+      min-width: 150px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      display: none;
+      flex-direction: column;
+      z-index: 1001;
+    }
+
+    .dropdown-content a {
+      padding: 12px 16px;
+      transition: background 0.3s;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #f1f1f1;
+    }
+
+    .dropdown-content.show {
+      display: flex;
+    }
+
+
+    /* About Section */
+    .about-section {
+      max-width: 1000px;
+      margin: 140px auto 60px;
+      padding: 40px;
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.05);
+    }
+
+    .about-section h1 {
+      font-size: 36px;
+      color: #004d40;
+      margin-bottom: 20px;
+    }
+
+    .about-section p {
+      font-size: 16px;
+      line-height: 1.8;
+      margin-bottom: 20px;
+      text-align: justify;
+    }
+
+    .about-image {
+      width: 100%;
+      max-height: 400px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .about-section {
+        margin: 20px;
+        padding: 20px;
+      }
+
+      .about-section h1 {
+        font-size: 28px;
+      }
+
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 20px;
+      }
+
+      .nav-links {
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+    }
+
+    /* Footer */
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #004d40;
+  color: white;
+  text-align: center;
+  padding: 15px 0;
+  font-size: 14px;
+  z-index: 1000;
+}
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="logo">LACOSTE</div>
+    <div class="nav-links">
+      <a href="index.html" class="nav-btn">Home</a>
+
+      <div class="dropdown">
+        <div class="dropdown-btn">Men</div>
+        <div class="dropdown-content">
+          <a href="button-shirts.html">Shirts</a>
+          <a href="mshoes.html">Shoes</a>
+          <a href="maccessories.html">Accessories</a>
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <div class="dropdown-btn">Women</div>
+        <div class="dropdown-content">
+          <a href="wtops.html">Tops</a>
+          <a href="wshoes.html">Sneakers</a>
+          <a href="wbags.html">Bags</a>
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <div class="dropdown-btn">Collections</div>
+        <div class="dropdown-content">
+          <a href="new.html">New Arrivals</a>
+          <a href="best.html">Best Sellers</a>
+          <a href="lim.html">Limited Edition</a>
+        </div>
+      </div>
+
+      
+      <a href="about.html" class="nav-btn">About</a>
+      <a href="#" class="icon-btn"><i class="fas fa-shopping-cart"></i></a>
+      <a href="login.html" class="icon-btn"><i class="fas fa-user"></i></a>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    &copy; 2025 LACOSTE | Paul Falame | This project is for School Purposes Only.
+  </div>
+
+  <!-- About Section -->s
+  <section class="about-section">
+    <h1>About LACOSTE</h1>
+    <p>
+      Founded in 1933 by tennis legend René Lacoste and André Gillier, Lacoste is a symbol of effortless elegance, sport-inspired fashion, and innovation. Known globally for its iconic crocodile logo, Lacoste has become a lifestyle brand that transcends generations.
+    </p>
+    <p>
+      What began with a simple polo shirt has evolved into a global movement of fashion, sport, and culture. Lacoste blends classic heritage with modern designs, offering a wide range of apparel, footwear, accessories, and fragrances that reflect timeless style and authenticity.
+    </p>
+    <p>
+      At the heart of Lacoste is a commitment to quality, sustainability, and bold creativity. Whether on the court, in the city, or by the coast, Lacoste invites you to live beautifully and dress with confidence.
+    </p>
+    <img src="lacostelogo.png" alt="Lacoste Brand Image" class="about-image">
+  </section>
+
+ 
+  <script>
+    document.querySelectorAll('.dropdown-btn').forEach(btn => {
+      btn.addEventListener('click', function () {
+        const dropdown = this.nextElementSibling;
+
+        document.querySelectorAll('.dropdown-content').forEach(menu => {
+          if (menu !== dropdown) {
+            menu.classList.remove('show');
+          }
+        });
+
+        dropdown.classList.toggle('show');
+      });
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('.dropdown')) {
+        document.querySelectorAll('.dropdown-content').forEach(menu => {
+          menu.classList.remove('show');
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>

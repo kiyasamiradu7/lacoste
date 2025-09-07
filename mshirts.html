@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LACOSTE | Men Shirts</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { font-family: 'Segoe UI', sans-serif; background-color: #f9f9f9; scroll-behavior: smooth; }
+    a { text-decoration: none; color: inherit; }
+
+    /* Navbar */
+    .navbar { position: fixed; top: 0; width: 100%; background-color: white; padding: 20px 60px;
+      display: flex; justify-content: space-between; align-items: center; z-index: 1000; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    .logo { font-size: 24px; font-weight: bold; color: #004d40; }
+    .nav-links { display: flex; gap: 30px; align-items: center; }
+    .nav-btn { font-weight: 500; padding: 6px 10px; border-radius: 4px; transition: background 0.3s; }
+    .nav-btn:hover { background-color: #e0f2f1; }
+    .icon-btn { font-size: 18px; padding: 6px 10px; color: #004d40; transition: color 0.3s, background 0.3s; border-radius: 4px; display:flex; align-items:center; gap:6px; }
+    .icon-btn:hover { background-color: #e0f2f1; color: #00251a; }
+    .dropdown { position: relative; }
+    .dropdown-btn { cursor: pointer; font-weight: 500; }
+    .dropdown-content { position: absolute; top: 45px; left: 0; background-color: white; min-width: 150px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1); display: none; flex-direction: column; z-index: 1001; }
+    .dropdown-content a { padding: 12px 16px; transition: background 0.3s; }
+    .dropdown-content a:hover { background-color: #f1f1f1; }
+    .dropdown-content.show { display: flex; }
+    .contact-link { font-weight: 500; padding: 6px 10px; border-radius: 4px; transition: background 0.3s; }
+    .contact-link:hover { background-color: #e0f2f1; }
+
+    /* Shirts Section */
+    .button-shirts-section { padding: 140px 60px 80px; text-align: center; }
+    .section-title { font-size: 36px; color: #004d40; margin-bottom: 40px; }
+    .shirts-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 40px; }
+    .shirt-card { background-color: white; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      max-width: 280px; padding: 20px; transition: transform 0.3s; text-align: left; }
+    .shirt-card:hover { transform: translateY(-10px); }
+    .shirt-card img { width: 100%; border-radius: 8px; margin-bottom: 15px; cursor: pointer; transition: transform 0.2s; }
+    .shirt-card img:hover { transform: scale(1.03); }
+    .shirt-card h3 { font-size: 20px; color: #004d40; margin-bottom: 10px; }
+    .shirt-details { font-size: 14px; color: #555; line-height: 1.6; }
+    .shirt-details strong { color: #004d40; }
+
+    /* Modal */
+    .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 20px; }
+    .modal.show { display: flex; }
+    .modal-content {
+      background: #fff; border-radius: 12px; max-width: 900px; width: 100%;
+      padding: 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: center; position: relative;
+    }
+    .modal-left img { width: 100%; border-radius: 8px; object-fit: cover; max-height: 520px; }
+    .modal-right h3 { margin-bottom: 8px; font-size: 22px; color: #004d40; }
+    .modal-right p { margin-bottom: 12px; color: #333; font-weight: 600; }
+    .modal-right label { display: block; margin-top: 8px; font-size: 13px; color: #555; margin-bottom: 6px; }
+    .modal-right select { width: 100%; padding: 8px 10px; border-radius: 6px; border: 1px solid #ddd; margin-bottom: 10px; }
+    .modal-right .add-btn { display: inline-block; margin-top: 10px; background: #004d40; color: #fff; padding: 10px 14px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; }
+    .modal-right .add-btn:active { transform: translateY(1px); }
+    .modal-close { position: absolute; top: 10px; right: 12px; font-size: 22px; cursor: pointer; color:#666; }
+    @media (max-width: 720px) {
+      .modal-content { grid-template-columns: 1fr; max-height: 90vh; overflow: auto; }
+      .modal-left img { max-height: 360px; }
+    }
+
+    /* Toast */
+    .toast { position: fixed; top: 20px; right: 20px; background: #004d40; color: #fff; padding: 10px 14px; border-radius: 8px; display: none; z-index: 2100; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+    .toast.show { display: block; animation: fade 0.4s ease; }
+    @keyframes fade { from {opacity:0; transform: translateY(-6px)} to {opacity:1; transform:none} }
+
+    /* Footer */
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #004d40;
+  color: white;
+  text-align: center;
+  padding: 15px 0;
+  font-size: 14px;
+  z-index: 1000;
+}
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="logo">LACOSTE</div>
+    <div class="nav-links">
+      <a href="index.html" class="nav-btn">Home</a>
+
+      <div class="dropdown">
+        <div class="dropdown-btn">Men</div>
+        <div class="dropdown-content">
+          <a href="button-shirts.html">Shirts</a>
+          <a href="mshoes.html">Shoes</a>
+          <a href="maccessories.html">Accessories</a>
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <div class="dropdown-btn">Women</div>
+        <div class="dropdown-content">
+          <a href="wtops.html">Tops</a>
+          <a href="wshoes.html">Sneakers</a>
+          <a href="#">Bags</a>
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <div class="dropdown-btn">Collections</div>
+        <div class="dropdown-content">
+          <a href="new.html">New Arrivals</a>
+          <a href="best.html">Best Sellers</a>
+          <a href="lim.html">Limited Edition</a>
+        </div>
+      </div>
+
+     
+      <a href="about.html" class="nav-btn">About</a>
+      <a href="#" class="icon-btn"><i class="fas fa-shopping-cart"></i> <span id="cart-count">0</span></a>
+      <a href="login.html" class="icon-btn"><i class="fas fa-user"></i></a>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div id="product-modal" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-name">
+      <div class="modal-left">
+        <img id="modal-img" src="" alt="">
+      </div>
+      <div class="modal-right">
+        <div class="modal-close" id="modal-close" title="Close">&times;</div>
+        <h3 id="modal-name">Product Name</h3>
+        <p id="modal-price">₱0</p>
+
+        <label for="modal-size">Size</label>
+        <select id="modal-size" aria-label="Choose size"></select>
+
+        <label for="modal-color">Color</label>
+        <select id="modal-color" aria-label="Choose color"></select>
+
+        <button id="add-to-cart-btn" class="add-btn">Add to Cart</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast">Added to cart</div>
+
+  <!-- Button Shirts Section -->
+  <section class="button-shirts-section">
+    <h2 class="section-title">T-Shirts Collection</h2>
+    <div class="shirts-container">
+      <!-- Shirt Cards (images have data attributes used to populate the modal) -->
+      <div class="shirt-card">
+        <img src="1shirt.png" alt="Men's Lacoste SPORT 3D Print Crocodile Ultra Dry T-shirt"
+             data-name="Men's Lacoste SPORT 3D Print Crocodile Ultra Dry T-shirt"
+             data-price="3500"
+             data-sizes="S,M,L,XL"
+             data-colors="White,Black,Navy">
+        <h3>Men's Lacoste SPORT 3D Print Crocodile Ultra Dry T-shirt</h3>
+        <div class="shirt-details"><strong>Price:</strong> ₱3,500<br><strong>Sizes:</strong> S, M, L, XL<br><strong>Colors:</strong> White, Black, Navy</div>
+      </div>
+
+      <div class="shirt-card">
+        <img src="shirt1.png" alt="Slim Fit Button Shirt"
+             data-name="Slim Fit Button Shirt"
+             data-price="3200"
+             data-sizes="S,M,L"
+             data-colors="Blue,White">
+        <h3>Slim Fit Button Shirt</h3>
+        <div class="shirt-details"><strong>Price:</strong> ₱3,200<br><strong>Sizes:</strong> S, M, L<br><strong>Colors:</strong> Blue, White</div>
+      </div>
+
+      <div class="shirt-card">
+        <img src="2shirt.png" alt="Roland-Garros Edition Ultra Dry Tennis T-Shirt"
+             data-name="Roland-Garros Edition Ultra Dry Tennis T-shirt"
+             data-price="4000"
+             data-sizes="M,L,XL"
+             data-colors="White,Green">
+        <h3>Roland-Garros Edition Ultra Dry Tennis T-shirt</h3>
+        <div class="shirt-details"><strong>Price:</strong> ₱4,000<br><strong>Sizes:</strong> M, L, XL<br><strong>Colors:</strong> White, Green</div>
+      </div>
+
+      <div class="shirt-card">
+        <img src="3shirt.png" alt="Regular Fit Ribbed Collar Cotton T-Shirt"
+             data-name="Regular Fit Ribbed Collar Cotton T-shirt"
+             data-price="2800"
+             data-sizes="S,M,L"
+             data-colors="Grey,Black">
+        <h3>Regular Fit Ribbed Collar Cotton T-shirt</h3>
+        <div class="shirt-details"><strong>Price:</strong> ₱2,800<br><strong>Sizes:</strong> S, M, L<br><strong>Colors:</strong> Grey, Black</div>
+      </div>
+
+      <div class="shirt-card">
+        <img src="4shirt.png" alt="Printed T-shirt"
+             data-name="Printed T-shirt"
+             data-price="3000"
+             data-sizes="S,M,L,XL"
+             data-colors="White,Yellow">
+        <h3>Printed T-shirt</h3>
+        <div class="shirt-details"><strong>Price:</strong> ₱3,000<br><strong>Sizes:</strong> S, M, L, XL<br><strong>Colors:</strong> White, Yellow</div>
+      </div>
+
+      <div class="shirt-card">
+        <img src="5shirt.png" alt="Regular Fit Wool Blend T-Shirt"
+             data-name="Regular Fit Wool Blend T-shirt"
+             data-price="3400"
+             data-sizes="M,L"
+             data-colors="Beige,White">
+        <h3>Regular Fit Wool Blend T-shirt</h3>
+        <div class="shirt-details"><strong>Price:</strong> ₱3,400<br><strong>Sizes:</strong> M, L<br><strong>Colors:</strong> Beige, White</div>
+      </div>
+
+      <div class="shirt-card">
+        <img src="6shirt.png" alt="Lacoste Caviar T-shirt"
+             data-name="Lacoste Caviar T-shirt"
+             data-price="3600"
+             data-sizes="S,M,L,XL"
+             data-colors="Black,Navy">
+        <h3>Lacoste Caviar T-shirt</h3>
+        <div class="shirt-details"><strong>Price:</strong> ₱3,600<br><strong>Sizes:</strong> S, M, L, XL<br><strong>Colors:</strong> Black, Navy</div>
+      </div>
+
+      <div class="shirt-card">
+        <img src="7shirt.png" alt="Cotton Jersey Monogram T-shirt"
+             data-name="Cotton Jersey Monogram T-shirt"
+             data-price="3100"
+             data-sizes="S,M,L"
+             data-colors="White,Grey">
+        <h3>Cotton Jersey Monogram T-shirt</h3>
+        <div class="shirt-details"><strong>Price:</strong> ₱3,100<br><strong>Sizes:</strong> S, M, L<br><strong>Colors:</strong> White, Grey</div>
+      </div>
+
+      <div class="shirt-card">
+        <img src="8shirt.png" alt="Loose Fit Printed Cotton T-shirt"
+             data-name="Loose Fit Printed Cotton T-shirt"
+             data-price="2900"
+             data-sizes="M,L,XL"
+             data-colors="Black,White">
+        <h3>Loose Fit Printed Cotton T-shirt</h3>
+        <div class="shirt-details"><strong>Price:</strong> ₱2,900<br><strong>Sizes:</strong> M, L, XL<br><strong>Colors:</strong> Black, White</div>
+      </div>
+
+      <div class="shirt-card">
+        <img src="9shirt.png" alt="Lacoste Tennis x Novak Djokovic T-shirt"
+             data-name="Lacoste Tennis x Novak Djokovic T-shirt"
+             data-price="4200"
+             data-sizes="S,M,L,XL"
+             data-colors="Blue,White">
+        <h3>Lacoste Tennis x Novak Djokovic T-shirt</h3>
+        <div class="shirt-details"><strong>Price:</strong> ₱4,200<br><strong>Sizes:</strong> S, M, L, XL<br><strong>Colors:</strong> Blue, White</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <div class="footer">
+    &copy; 2025 LACOSTE | Paul Falame | This project is for School Purposes Only.
+  </div>
+
+  <!-- JS -->
+  <script>
+   
+    let cart = [];
+    const cartCount = document.getElementById('cart-count');
+    const modal = document.getElementById('product-modal');
+    const modalImg = document.getElementById('modal-img');
+    const modalName = document.getElementById('modal-name');
+    const modalPrice = document.getElementById('modal-price');
+    const modalSize = document.getElementById('modal-size');
+    const modalColor = document.getElementById('modal-color');
+    const addToCartBtn = document.getElementById('add-to-cart-btn');
+    const modalClose = document.getElementById('modal-close');
+    const toast = document.getElementById('toast');
+
+    let activeProduct = null; 
+
+    
+    function openProductModal(data) {
+      activeProduct = data;
+      modalImg.src = data.img;
+      modalImg.alt = data.name;
+      modalName.textContent = data.name;
+      modalPrice.textContent = `₱${Number(data.price).toLocaleString()}`;
+
+      
+      modalSize.innerHTML = '';
+      if (data.sizes && data.sizes.length) {
+        data.sizes.forEach(s => {
+          const option = document.createElement('option');
+          option.value = s;
+          option.textContent = s;
+          modalSize.appendChild(option);
+        });
+        modalSize.parentElement.style.display = 'block';
+      } else {
+        modalSize.parentElement.style.display = 'none';
+      }
+
+      // populate color select
+      modalColor.innerHTML = '';
+      if (data.colors && data.colors.length) {
+        data.colors.forEach(c => {
+          const option = document.createElement('option');
+          option.value = c;
+          option.textContent = c;
+          modalColor.appendChild(option);
+        });
+        modalColor.parentElement.style.display = 'block';
+      } else {
+        modalColor.parentElement.style.display = 'none';
+      }
+
+      modal.classList.add('show');
+      modal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeModal() {
+      modal.classList.remove('show');
+      modal.setAttribute('aria-hidden', 'true');
+      activeProduct = null;
+    }
+
+    
+    document.querySelectorAll('.shirt-card img').forEach(img => {
+      img.addEventListener('click', () => {
+        const data = {
+          img: img.src,
+          name: img.dataset.name || img.alt || 'Product',
+          price: img.dataset.price || '0',
+          sizes: img.dataset.sizes ? img.dataset.sizes.split(',').map(s => s.trim()) : [],
+          colors: img.dataset.colors ? img.dataset.colors.split(',').map(c => c.trim()) : []
+        };
+        openProductModal(data);
+      });
+    });
+
+   
+    addToCartBtn.addEventListener('click', () => {
+      if (!activeProduct) return;
+      const chosenSize = modalSize.value || null;
+      const chosenColor = modalColor.value || null;
+
+      const item = {
+        name: activeProduct.name,
+        price: Number(activeProduct.price),
+        size: chosenSize,
+        color: chosenColor,
+        img: activeProduct.img,
+        qty: 1
+      };
+
+      cart.push(item);
+      cartCount.textContent = cart.length;
+
+      
+      toast.textContent = `${activeProduct.name} added to cart`;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1500);
+
+      closeModal();
+    });
+
+    
+    modalClose.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    document.querySelectorAll('.dropdown-btn').forEach(btn => {
+      btn.addEventListener('click', function () {
+        const dropdown = this.nextElementSibling;
+        document.querySelectorAll('.dropdown-content').forEach(menu => {
+          if (menu !== dropdown) menu.classList.remove('show');
+        });
+        dropdown.classList.toggle('show');
+      });
+    });
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.dropdown')) {
+        document.querySelectorAll('.dropdown-content').forEach(menu => menu.classList.remove('show'));
+      }
+    });
+
+    
+    window.__cart = cart;
+  </script>
+
+</body>
+</html>
